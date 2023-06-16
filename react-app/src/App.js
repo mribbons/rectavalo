@@ -18,7 +18,8 @@ function App() {
       throw new Error(`postAction: no at least one action required.`)
     }
 
-    window.ReactNativeWebView.postMessage(JSON.stringify({fn, args}))
+    window.chrome && window.chrome.webview.postMessage(JSON.stringify({fn, args}))
+    window.ReactNativeWebView && window.ReactNativeWebView.postMessage(JSON.stringify({fn, args}))
   }
 
   const sendPostMessage = () => {
@@ -73,9 +74,11 @@ function App() {
   useEffect(function setup() {
     // window -> message receives a lot of noise, just use document
     document.addEventListener('message', nativeMessage, true)
+    window.chrome && window.chrome.webview.addEventListener('message', nativeMessage, true);
 
     return function clean () {
       document.removeEventListener('message', nativeMessage, true)
+      window.chrome && window.chrome.webview.removeEventListener('message', nativeMessage, true);
     }
   }, [nativeMessage, log])
 

@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <stdlib.h>
 #include <string>
+#include <iostream>
 #include <tchar.h>
 #include <wrl.h>
 #include <wil/com.h>
@@ -10,6 +11,7 @@
 // include WebView2 header
 #include "WebView2.h"
 // </IncludeHeader>
+#include "libload.hpp"
 
 using namespace Microsoft::WRL;
 
@@ -123,6 +125,8 @@ int CALLBACK WinMain(
 		nCmdShow);
 	UpdateWindow(hWnd);
 
+	std::string result(hello());
+
 	// <-- WebView2 sample code starts here -->
 	// Step 3 - Create a single WebView within the parent window
 	// Locate the browser and set up the environment for WebView
@@ -191,17 +195,17 @@ int CALLBACK WinMain(
 								wil::unique_cotaskmem_string message;
 								args->TryGetWebMessageAsString(&message);
 								// processMessage(&message);
-								webview->PostWebMessageAsString(message.get());
+								//webview->PostWebMessageAsString(message.get());
 								return S_OK;
 							}).Get(), &token);
 
 						// Schedule an async task to add initialization script that
 						// 1) Add an listener to print message from the host
 						// 2) Post document URL to the host
-						webview->AddScriptToExecuteOnDocumentCreated(
+						/*webview->AddScriptToExecuteOnDocumentCreated(
 							L"window.chrome.webview.addEventListener(\'message\', event => console.log(event.data));" \
 							L"window.chrome.webview.postMessage(window.document.URL);",
-							nullptr);
+							nullptr);*/
 						// </CommunicationHostWeb>
 
 						return S_OK;
