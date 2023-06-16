@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -26,6 +26,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import CustomWebView from './CustomWebView'
+import Rectavalo from './Rectavalo'
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -59,15 +60,31 @@ function Section({children, title}: SectionProps): JSX.Element {
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const [nativeResult, setNativeResult] = useState<String>("")
+  const [firstStart, setFirstStart] = useState<Boolean>(true);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  useEffect(() => {
+    // if (!firstStart)
+    //   return;
+
+    setFirstStart(false);
+
+    Rectavalo.hello().then((r: any) => {
+      setNativeResult(r.result);
+      // console.log(``)
+      console.log(`${Date.now()} native: ${JSON.stringify(r)}`)
+    })
+  }, [firstStart])
+
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <>
+      <Text>{nativeResult}</Text>
       <CustomWebView finalUrl='http://192.168.1.77:3000' />
-    </SafeAreaView>
+    </>
   );
 }
 

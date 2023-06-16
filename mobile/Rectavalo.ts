@@ -1,0 +1,40 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ * @flow
+ * @jsdoc
+ */
+
+'use strict';
+
+import { NativeModules } from 'react-native';
+
+const RectavaloModule = NativeModules.Rectavalo;
+
+if (!RectavaloModule) {
+  throw new Error(`[Rectavalo]: NativeModule: Rectavalo is null.
+
+To fix this issue try these steps:
+
+  • Rebuild and restart the app.
+
+  • Run the packager with \`--clearCache\` flag.
+
+  • Run \`pod install\` in the \`ios\` directory and then rebuild and re-run the app.
+`);
+}
+
+const Rectavalo = {
+  /**
+   */
+  hello: function(): Promise<String> {
+    // return "hello";
+    return RectavaloModule.hello();
+  },
+};
+
+export default Rectavalo;
