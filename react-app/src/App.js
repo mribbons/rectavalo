@@ -2,16 +2,6 @@ import logo from './logo.svg';
 import './App.css';
 import { useCallback, useMemo, useEffect, useState } from 'react';
 
-
-// window.addEventListener('message',function(event){
-//   document.getElementById('test').innerHTML = event.data;
-//   console.log("Message received from RN: ",event.data);
-// },false);
-// document.addEventListener('message',function(event){
-//   document.getElementById('test').innerHTML = event.data;
-//   console.log("Message received from RN: ",event.data);
-// },false);
-
 function App() {
   const nativeCall = (fn, ...args) => {
     if (fn === undefined) {
@@ -28,13 +18,9 @@ function App() {
     nativeCall('nativeHello')
   }
 
-  const [nativeResult, setNativeResult] = useState("")
-  const [loadOnce, setLoadOnce] = useState(false)
-
-  
+  const [nativeResult, setNativeResult] = useState("")  
 
   const log = useCallback( (...args) => {
-    // nativeCall('console.log', ...(Array(args).map(a => JSON.stringify(a)) ))
     console.log(...args)
     nativeCall('console.log', ...args)
   }, [])
@@ -71,19 +57,16 @@ function App() {
   }, [setNativeResult])
 
 
-  useEffect(function setup() {
+  useEffect(() => {
     // window -> message receives a lot of noise, just use document
     document.addEventListener('message', nativeMessage, true)
     window.chrome && window.chrome.webview.addEventListener('message', nativeMessage, true);
 
-    return function clean () {
+    return () => {
       document.removeEventListener('message', nativeMessage, true)
       window.chrome && window.chrome.webview.removeEventListener('message', nativeMessage, true);
     }
   }, [nativeMessage, log])
-
-  // document.addEventListener('message', function (e) { console.log('document event', e) }, true)
-
   
   return (
     <div className="App">
