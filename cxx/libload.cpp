@@ -1,6 +1,6 @@
 #include <string>
 
-std::string value = "hello";
+std::string value = "Hello from C++!";
 const char* hello();
 
 #ifdef ANDROID
@@ -13,8 +13,7 @@ extern "C" JNIEXPORT jstring JNICALL
 Java_com_rectavalo_RectavaloModule_helloNative(
         JNIEnv *env,
         jobject /* this */) {
-    std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
+    return env->NewStringUTF(hello());
 }
 #endif
 
