@@ -65,10 +65,10 @@ static NSString *const RequestURL = @"http://192.168.1.77:3000";
     [webView evaluateJavaScript:jsString
               completionHandler:^(NSString *result, NSError *error){
                   if (error != nil) {
-                      NSLog(@"Error：%@", error.localizedDescription);
+                      NSLog(@"Error: %@", error.localizedDescription);
                       return;
                   }
-                  NSLog(@"Result：%@", result);
+                  NSLog(@"Result: %@", result);
               }];
 }
 
@@ -180,7 +180,7 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    NSLog(@"error：%ld", (long)error.code);
+    NSLog(@"error: %ld", (long)error.code);
 }
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
