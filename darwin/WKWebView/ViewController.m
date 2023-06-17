@@ -72,11 +72,9 @@ static NSString *const RequestURL = @"http://192.168.1.77:3000";
               }];
 }
 
-/// autoLayoutをセット
 - (void)setupWKWebViewConstain: (WKWebView *)webView {
     webView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    // ４辺のマージンを0にする
     NSLayoutConstraint *topConstraint =
     [NSLayoutConstraint constraintWithItem: webView
                                  attribute: NSLayoutAttributeTop
