@@ -88,3 +88,6 @@ yarn-error.log*
 .vs
 x64
 packages
+
+# cmake generated
+_build/

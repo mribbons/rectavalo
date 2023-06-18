@@ -23,8 +23,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Ofast")
 
 add_definitions(-DANDROID)
 
-file(GLOB CXX_SRCS ${CMAKE_SOURCE_DIR}/../../../../../../cxx/*.cpp)
-add_library(vl ${CXX_SRCS})
+file(GLOB CXX_SRCS ${CMAKE_SOURCE_DIR}/../../../cxx/*.cpp)
 
 add_library( # Sets the name of the library.
   rectavalo
@@ -32,8 +31,6 @@ add_library( # Sets the name of the library.
   SHARED
   ${CXX_SRCS}
 )
-
-SET(MINIGLOG ON)
 
 include_directories(${CMAKE_SOURCE_DIR}/include
   ${CMAKE_SOURCE_DIR}
