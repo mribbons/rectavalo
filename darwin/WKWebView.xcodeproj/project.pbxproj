@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5143709E2A3DC7E400B52DFA /* libload.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5143709C2A3DC7E400B52DFA /* libload.cpp */; };
 		51A3C1F62A3C7B0100E3ABAB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A3C1F52A3C7B0100E3ABAB /* AppDelegate.m */; };
 		51A3C1F92A3C7B0100E3ABAB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51A3C1F82A3C7B0100E3ABAB /* ViewController.m */; };
 		51A3C1FB2A3C7B0200E3ABAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51A3C1FA2A3C7B0200E3ABAB /* Assets.xcassets */; };
@@ -35,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5143709C2A3DC7E400B52DFA /* libload.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = libload.cpp; path = ../../cxx/libload.cpp; sourceTree = "<group>"; };
+		5143709D2A3DC7E400B52DFA /* libload.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = libload.hpp; path = ../../cxx/libload.hpp; sourceTree = "<group>"; };
 		51A3C1F12A3C7B0100E3ABAB /* WKWebView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WKWebView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51A3C1F42A3C7B0100E3ABAB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		51A3C1F52A3C7B0100E3ABAB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -99,6 +102,8 @@
 		51A3C1F32A3C7B0100E3ABAB /* WKWebView */ = {
 			isa = PBXGroup;
 			children = (
+				5143709C2A3DC7E400B52DFA /* libload.cpp */,
+				5143709D2A3DC7E400B52DFA /* libload.hpp */,
 				51A3C1F42A3C7B0100E3ABAB /* AppDelegate.h */,
 				51A3C1F52A3C7B0100E3ABAB /* AppDelegate.m */,
 				51A3C1F72A3C7B0100E3ABAB /* ViewController.h */,
@@ -260,6 +265,7 @@
 				51A3C1F92A3C7B0100E3ABAB /* ViewController.m in Sources */,
 				51A3C2002A3C7B0200E3ABAB /* main.m in Sources */,
 				51A3C1F62A3C7B0100E3ABAB /* AppDelegate.m in Sources */,
+				5143709E2A3DC7E400B52DFA /* libload.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

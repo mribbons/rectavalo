@@ -7,6 +7,7 @@
 
 #import "ViewController.h"
 #import <WebKit/WebKit.h>
+#import "libload.hpp"
 
 @interface ViewController () <WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler>
 @property (weak, nonatomic) IBOutlet NSView *baseView;
