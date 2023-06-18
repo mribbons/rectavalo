@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useCallback, useMemo, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 function App() {
   const nativeCall = (fn, ...args) => {
@@ -10,6 +10,7 @@ function App() {
 
     window.chrome && window.chrome.webview.postMessage(JSON.stringify({fn, args}))
     window.ReactNativeWebView && window.ReactNativeWebView.postMessage(JSON.stringify({fn, args}))
+    window.webkit && window.webkit.messageHandlers.callbackHandler.postMessage(JSON.stringify({fn, args}));
   }
 
   const sendPostMessage = () => {
@@ -60,11 +61,11 @@ function App() {
   useEffect(() => {
     // window -> message receives a lot of noise, just use document
     document.addEventListener('message', nativeMessage, true)
-    window.chrome && window.chrome.webview.addEventListener('message', nativeMessage, true);
+    window?.chrome?.webview && window.chrome.webview.addEventListener('message', nativeMessage, true)
 
     return () => {
       document.removeEventListener('message', nativeMessage, true)
-      window.chrome && window.chrome.webview.removeEventListener('message', nativeMessage, true);
+      window?.chrome?.webview && window.chrome.webview.removeEventListener('message', nativeMessage, true)
     }
   }, [nativeMessage, log])
   
