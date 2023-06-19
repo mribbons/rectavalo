@@ -2,15 +2,20 @@ import logo from './logo.svg';
 import './App.css';
 import { useCallback, useEffect, useState } from 'react';
 
+const chromeWebView = window.chrome !== undefined
+const reactNativeWebView = window.ReactNativeWebView !== undefined
+const webkitWebView = window.webkit !== undefined
+const start = Date.now()
+
 function App() {
   const nativeCall = (fn, ...args) => {
     if (fn === undefined) {
       throw new Error(`postAction: no at least one action required.`)
     }
 
-    window.chrome && window.chrome.webview.postMessage(JSON.stringify({fn, args}))
-    window.ReactNativeWebView && window.ReactNativeWebView.postMessage(JSON.stringify({fn, args}))
-    window.webkit && window.webkit.messageHandlers.callbackHandler.postMessage(JSON.stringify({fn, args}));
+    chromeWebView && window.chrome.webview.postMessage(JSON.stringify({fn, args}))
+    reactNativeWebView && window.ReactNativeWebView.postMessage(JSON.stringify({fn, args}))
+    webkitWebView && window.webkit.messageHandlers.callbackHandler.postMessage(JSON.stringify({fn, args}));
   }
 
   const sendPostMessage = () => {
@@ -28,14 +33,13 @@ function App() {
 
 
   const nativeMessage = useCallback((...args) => {
-    log(`message: ${JSON.stringify(args[0], Object.keys(MessageEvent.prototype))}`)
     if (!args[0])
       return
 
     if (typeof args[0].data === 'string') {
       if (args[0].data.startsWith('webpackHotUpdate')) {
-        log(`reload`)
-        // window.location.reload()
+        // ignore these!
+        return
       }
     } else {
       // ignore non string
@@ -54,18 +58,20 @@ function App() {
     } catch (e) {
       log(`error parsing result: ${args[0].data.substring ? args[0].data.substring(0, 10) : '<>'}\n${e.message}\n${e.stack}`)
     }
-    log(`native result 1: `, args[0].data)
+    log(`native result 1: (${start})`, args[0].data)
   }, [setNativeResult])
 
 
   useEffect(() => {
     // window -> message receives a lot of noise, just use document
-    document.addEventListener('message', nativeMessage, true)
-    window?.chrome?.webview && window.chrome.webview.addEventListener('message', nativeMessage, true)
+    reactNativeWebView && document.addEventListener('message', nativeMessage, true)
+    chromeWebView && window.chrome.webview.addEventListener('message', nativeMessage, true)
+    webkitWebView && window.addEventListener('message', nativeMessage, true)
 
     return () => {
-      document.removeEventListener('message', nativeMessage, true)
-      window?.chrome?.webview && window.chrome.webview.removeEventListener('message', nativeMessage, true)
+      reactNativeWebView && document.removeEventListener('message', nativeMessage, true)
+      chromeWebView && window.chrome.webview.removeEventListener('message', nativeMessage, true)
+      webkitWebView && window.removeEventListener('message', nativeMessage, true)
     }
   }, [nativeMessage, log])
   
