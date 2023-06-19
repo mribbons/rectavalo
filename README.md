@@ -1,7 +1,7 @@
 ## Todo
 
 ### General
- - [ ] json parser
+ - [x] json parser
  - [ ] websocket server
  - [ ] move json, websocket to separate libs
  - [ ] rename libload, or move json utils
@@ -19,6 +19,7 @@
 
 ### iOS
  - [ ] custom lib imports
+ - [ ] cmakelists for native layer
 
 ### Android
  - [ ] custom lib imports
