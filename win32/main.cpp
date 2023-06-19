@@ -194,8 +194,10 @@ int CALLBACK WinMain(
 							[](ICoreWebView2* webview, ICoreWebView2WebMessageReceivedEventArgs* args) -> HRESULT {
 								wil::unique_cotaskmem_string message;
 								args->TryGetWebMessageAsString(&message);
+								auto response = onMessage((std::wstring)message.get());
 								// processMessage(&message);
-								//webview->PostWebMessageAsString(message.get());
+								if (response.size() > 0)
+									webview->PostWebMessageAsString(response.c_str());
 								return S_OK;
 							}).Get(), &token);
 
@@ -227,6 +229,14 @@ int CALLBACK WinMain(
 
 	return (int)msg.wParam;
 }
+
+
+#ifdef _DEBUG
+int main()
+{
+	return WinMain(GetModuleHandle(NULL), NULL, GetCommandLineA(), SW_SHOWNORMAL);
+}
+#endif
 
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
 //

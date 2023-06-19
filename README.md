@@ -3,7 +3,14 @@
 ### General
  - [ ] json parser
  - [ ] websocket server
+ - [ ] move json, websocket to separate libs
+ - [ ] rename libload, or move json utils
  - [ ] shared lib load
+ - [ ] No hardcoded dev URL
+ - [ ] Support static/bundled html
+
+### React
+ - [ ] clean up 'CustomWebView' class
 
 ### Darwin
  - [ ] bundle identifier
@@ -17,6 +24,7 @@
 
 ### Windows
 - [ ] cmakelists.txt
+- [ ] cmakelists.txt: figure out how to use nuget packages
 - [ ] custom lib imports
 
 ### Linux
