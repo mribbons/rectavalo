@@ -10,7 +10,7 @@
 #import <WebKit/WebKit.h>
 
 void setup() {
-    NSWindow  *myWindow;      // typed pointer to NSWindow object
+    WebViewWindow  *myWindow;      // typed pointer to NSWindow object
     NSRect    graphicsRect;  // contains an origin, width, height
 
     // initialize the rectangle variable
@@ -21,7 +21,7 @@ void setup() {
                  styleMask:NSWindowStyleMaskTitled
                  |NSWindowStyleMaskClosable
                  |NSWindowStyleMaskMiniaturizable
-                           backing:nil
+                           backing:NSBackingStoreBuffered
                              defer:NO ];
 
     [myWindow setTitle:@"Web View App"];

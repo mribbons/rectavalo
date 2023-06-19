@@ -93,9 +93,9 @@ std::string onMessage(const Json::Value json) {
 
   Json::Value response;
   if (fn == "nativeHello") {
-    response["result"] = hello();
-    return json_stringify(response);
+    response["nativeResult"] = hello();
   } else if (fn == "console.log") {
+    // should supress console response. Logging this response creates an infinite loop.
     response["result"] = console_log(args);
   } else {
     response["error"] = "Unknown request: " + fn;
@@ -103,5 +103,5 @@ std::string onMessage(const Json::Value json) {
 
   // todo: await response in client side, don't console.log every response (infinite loop)
   // return json_stringify(response);
-  return "1";
+  return json_stringify(response);
 }

@@ -8,6 +8,7 @@
  - [ ] shared lib load
  - [ ] No hardcoded dev URL
  - [ ] Support static/bundled html
+ - [ ] json*.h - change sprintf to snprintf
 
 ### React
  - [ ] clean up 'CustomWebView' class

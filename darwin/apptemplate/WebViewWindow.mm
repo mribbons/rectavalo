@@ -7,6 +7,8 @@
 #import "WebViewWindow.h"
 #import <WebKit/WebKit.h>
 #import "libload.hpp"
+#include <iostream>
+#include <string>
 
 @interface WebViewWindow () <WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler>
 @property (nonatomic) WKWebView *webView;
@@ -27,6 +29,8 @@ static NSString *const RequestURL = @"http://192.168.1.77:3000";
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
     self.webView.allowsBackForwardNavigationGestures = YES;
+    
+    [self.webView.configuration.preferences setValue:@YES forKey:@"developerExtrasEnabled"];
     [self setContentView:self.webView];
 }
 
@@ -49,6 +53,7 @@ static NSString *const RequestURL = @"http://192.168.1.77:3000";
     WKUserContentController *wkUController = [WKUserContentController new];
     [wkUController addUserScript: userScript];
     [wkUController addScriptMessageHandler:self name:@"callbackHandler"];
+    [wkUController addScriptMessageHandler:self name:@"client"];
     
     WKWebViewConfiguration *wkWebConfig = [WKWebViewConfiguration new];
     wkWebConfig.userContentController = wkUController;
@@ -108,7 +113,12 @@ createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     if([message.name  isEqual: @"callbackHandler"]) {
-        NSLog(@"%@", [NSString stringWithFormat:@"%@", message.body]);
+        std::string body_str = std::string([message.body UTF8String]);
+        auto response = onMessage(body_str);
+        NSString* response_ns = [NSString 
+            stringWithFormat:@"(() => {window.postMessage(`%s`)})()", response.c_str()
+        ];
+        [self triggerJS:response_ns webView:self.webView];
     }
 }
 
