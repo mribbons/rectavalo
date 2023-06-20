@@ -31,9 +31,8 @@ To fix this issue try these steps:
 const Rectavalo = {
   /**
    */
-  hello: function(): Promise<String> {
-    // return "hello";
-    return RectavaloModule.hello();
+  hello: async function(): Promise<String> {
+    return await RectavaloModule.hello("");
   },
 };
 

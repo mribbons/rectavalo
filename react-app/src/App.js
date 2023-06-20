@@ -2,20 +2,22 @@ import logo from './logo.svg';
 import './App.css';
 import { useCallback, useEffect, useState } from 'react';
 
-const chromeWebView = window.chrome !== undefined
-const reactNativeWebView = window.ReactNativeWebView !== undefined
-const webkitWebView = window.webkit !== undefined
+const chromeWebView = window?.chrome?.webview?.postMessage !== undefined
+const reactNativeWebView = window?.ReactNativeWebView?.postMessage !== undefined
+const darwinWebView = window?.webkit?.messageHandlers?.callbackHandler?.postMessage !== undefined
+const iosWebView = navigator.userAgent.indexOf('iPhone') >= 0 || navigator.userAgent.indexOf('iPad') >= 0
+
 const start = Date.now()
 
 function App() {
   const nativeCall = (fn, ...args) => {
     if (fn === undefined) {
-      throw new Error(`postAction: no at least one action required.`)
+      throw new Error(`postAction: fn required.`)
     }
 
     chromeWebView && window.chrome.webview.postMessage(JSON.stringify({fn, args}))
     reactNativeWebView && window.ReactNativeWebView.postMessage(JSON.stringify({fn, args}))
-    webkitWebView && window.webkit.messageHandlers.callbackHandler.postMessage(JSON.stringify({fn, args}));
+    darwinWebView && window.webkit.messageHandlers.callbackHandler.postMessage(JSON.stringify({fn, args}));
   }
 
   const sendPostMessage = () => {
@@ -43,6 +45,7 @@ function App() {
       }
     } else {
       // ignore non string
+      log(`non string: ${JSON.stringify(args)}`)
       return
     }
 
@@ -63,15 +66,17 @@ function App() {
 
 
   useEffect(() => {
+
+    log(`window load: ${reactNativeWebView}, ${chromeWebView}, ${navigator.userAgent}`)
     // window -> message receives a lot of noise, just use document
-    reactNativeWebView && document.addEventListener('message', nativeMessage, true)
+    reactNativeWebView && window.addEventListener('message', nativeMessage, true)
     chromeWebView && window.chrome.webview.addEventListener('message', nativeMessage, true)
-    webkitWebView && window.addEventListener('message', nativeMessage, true)
+    darwinWebView && window.addEventListener('message', nativeMessage, true)
 
     return () => {
       reactNativeWebView && document.removeEventListener('message', nativeMessage, true)
       chromeWebView && window.chrome.webview.removeEventListener('message', nativeMessage, true)
-      webkitWebView && window.removeEventListener('message', nativeMessage, true)
+      darwinWebView && window.removeEventListener('message', nativeMessage, true)
     }
   }, [nativeMessage, log])
   
@@ -82,6 +87,12 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <ul>
+          <li>chromeWebView: {chromeWebView && "true"}</li>
+          <li>reactNativeWebView: {reactNativeWebView && "true"}</li>
+          <li>darwinWebView: {darwinWebView && "true"}</li>
+          <li>iosWebView: {iosWebView && "true"}</li>
+        </ul>
       <button onClick={sendPostMessage}>Hello Native</button>
       <h1>{nativeResult}</h1>
       </header>

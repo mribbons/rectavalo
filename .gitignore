@@ -91,3 +91,8 @@ packages
 
 # cmake generated
 _build/
+
+mobile/ios/LibLoad/**/*.hpp
+mobile/ios/LibLoad/**/*.h
+mobile/ios/LibLoad/**/*.cpp
+!mobile/ios/LibLoad/*Module.h

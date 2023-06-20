@@ -27,11 +27,11 @@ export default class CustomWebView extends Component {
       const r = (await Rectavalo.hello());
       // console.log(`nativeHello result: ${JSON.stringify(r)}, ${typeof r.result}`)
       if (typeof r.result === 'string') {
-        console.log(`post message`)
+        console.log(`post message: ${r.result}`)
         webViewRef.postMessage(JSON.stringify({ nativeResult: r.result }))
       }
       else
-        console.log(`bad Rectavalo result: ${JSON.stringify(r)}`)
+        console.log(`bad Rectavalo result: ${typeof r.result} ${JSON.stringify(r)}`)
     }
 
     const onMessage = async (e) => {

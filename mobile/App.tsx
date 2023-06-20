@@ -26,7 +26,6 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import CustomWebView from './CustomWebView'
-import Rectavalo from './Rectavalo'
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -66,19 +65,6 @@ function App(): JSX.Element {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
-  useEffect(() => {
-    // if (!firstStart)
-    //   return;
-
-    setFirstStart(false);
-
-    Rectavalo.hello().then((r: any) => {
-      setNativeResult(r.result);
-      // console.log(``)
-      console.log(`${Date.now()} native: ${JSON.stringify(r)}`)
-    })
-  }, [firstStart])
 
   return (
     <>
