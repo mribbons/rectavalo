@@ -23,36 +23,39 @@ export default class CustomWebView extends Component {
     // const webViewRef = React.useRef<WebView>(null);
     let webViewRef
 
-    const nativeHello = async () => {
-      const r = (await Rectavalo.hello());
+    const nativeCall = async (message) => {
+      const r = (await Rectavalo.nativeCall(message));
       // console.log(`nativeHello result: ${JSON.stringify(r)}, ${typeof r.result}`)
       if (typeof r.result === 'string') {
         console.log(`post message: ${r.result}`)
-        webViewRef.postMessage(JSON.stringify({ nativeResult: r.result }))
+        webViewRef.postMessage(r.result)
       }
       else
         console.log(`bad Rectavalo result: ${typeof r.result} ${JSON.stringify(r)}`)
     }
 
     const onMessage = async (e) => {
-      let { fn, args } = JSON.parse(e.nativeEvent.data)
 
-      if (fn === undefined) {
-        console.log(`unknown fn: ${e.nativeEvent.data}`)
-      }
+      // let { fn, args } = JSON.parse(e.nativeEvent.data)
+      console.log(`onMessage: ${e.nativeEvent.data}`)
+      nativeCall(e.nativeEvent.data)
 
-      // console.log(`fn: ${fn}, ${JSON.stringify(args)}`)
+      // if (fn === undefined) {
+      //   console.log(`unknown fn: ${e.nativeEvent.data}`)
+      // }
 
-      switch (fn) {
-        case 'nativeHello':
-          nativeHello()
-          break
-        case 'console.log':
-          console.log(...args)
-          break;
-        default:
-          console.log(`unknown fn: ${fn}, ${e.nativeEvent.data}`)
-      }
+      // // console.log(`fn: ${fn}, ${JSON.stringify(args)}`)
+
+      // switch (fn) {
+      //   case 'nativeHello':
+      //     nativeHello()
+      //     break
+      //   case 'console.log':
+      //     console.log(...args)
+      //     break;
+      //   default:
+      //     console.log(`unknown fn: ${fn}, ${e.nativeEvent.data}`)
+      // }
 
       // if (e.nativeEvent.data === 'nativeHello()' ) {
       //   const r = (await Rectavalo.hello());

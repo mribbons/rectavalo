@@ -34,6 +34,15 @@ const Rectavalo = {
   hello: async function(): Promise<String> {
     return await RectavaloModule.hello("");
   },
+
+  /**
+   * nativeCall
+   * @param messageBody Receives a json message body for a function to run, eg {fn:'native_call',args:[]}
+   * @returns 
+   */
+  nativeCall: async function(messageBody: string): Promise<String> {
+    return await RectavaloModule.nativeCall(messageBody);
+  },
 };
 
 export default Rectavalo;
