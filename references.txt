@@ -1,0 +1,3 @@
+https://github.com/adamrehn/websocket-server-demo
+https://dominoc925.blogspot.com/2016/08/use-cmake-to-help-build-and-use-windows.html
+https://bas-man.dev/post/cmake/use-cmake-generator/

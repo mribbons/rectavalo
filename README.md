@@ -9,6 +9,7 @@
  - [ ] No hardcoded dev URL
  - [ ] Support static/bundled html
  - [ ] json*.h - change sprintf to snprintf
+ - [ ] memory leaks in native message handler
 
 ### React
  - [ ] clean up 'CustomWebView' class
