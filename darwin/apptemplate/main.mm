@@ -14,7 +14,7 @@ void setup() {
     NSRect    graphicsRect;  // contains an origin, width, height
 
     // initialize the rectangle variable
-    graphicsRect = NSMakeRect(100.0, 350.0, 400.0, 400.0);
+    graphicsRect = NSMakeRect(100.0, 350.0, 1280, 720);
 
     myWindow = [ [WebViewWindow alloc]              // create the window
                initWithContentRect: graphicsRect
