@@ -87,14 +87,12 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <ul>
-          <li>chromeWebView: {chromeWebView && "true"}</li>
-          <li>reactNativeWebView: {reactNativeWebView && "true"}</li>
-          <li>darwinWebView: {darwinWebView && "true"}</li>
-          <li>iosWebView: {iosWebView && "true"}</li>
-        </ul>
       <button onClick={sendPostMessage}>Hello Native</button>
       <h1>{nativeResult}</h1>
+      {chromeWebView && "chromeWebView ☑️<br>"}<br/>
+      {reactNativeWebView && "reactNativeWebView ☑️"}<br/>
+      {darwinWebView && "darwinWebView ☑️"}<br/>
+      {iosWebView && "iosWebView ☑️"}<br/>
       </header>
     </div>
   );
