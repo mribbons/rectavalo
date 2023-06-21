@@ -91,9 +91,14 @@ std::string onMessage(const Json::Value json) {
   }*/
 
   std::string fn;
+  int callbackId = -1;
   std::vector<Json::Value> args;
   if (json["fn"].isString()) {
     fn = json["fn"].asString();
+  }
+
+  if (json["callbackId"].isIntegral()) {
+    callbackId = json["callbackId"].asInt();
   }
 
   if (json["args"].isArray()) {
@@ -111,6 +116,8 @@ std::string onMessage(const Json::Value json) {
   } else {
     response["error"] = "Unknown request: " + fn;
   }
+
+  if (callbackId > -1) response["callbackId"] = callbackId;
 
   // todo: await response in client side, don't console.log every response (infinite loop)
   // return json_stringify(response);

@@ -9,15 +9,38 @@ const iosWebView = navigator.userAgent.indexOf('iPhone') >= 0 || navigator.userA
 
 const start = Date.now()
 
+let _callbackId = -1;
+let _resolveQueue = {}
+
+function addMessageEventListener(nativeMessage) {
+  reactNativeWebView && window.addEventListener('message', nativeMessage, true);
+  chromeWebView && window.chrome.webview.addEventListener('message', nativeMessage, true);
+  darwinWebView && window.addEventListener('message', nativeMessage, true);
+}
+
+function removeMessageEventListener(nativeMessage) {
+  reactNativeWebView && document.removeEventListener('message', nativeMessage, true);
+  chromeWebView && window.chrome.webview.removeEventListener('message', nativeMessage, true);
+  darwinWebView && window.removeEventListener('message', nativeMessage, true);
+}
+
 function App() {
   const nativeCall = (fn, ...args) => {
     if (fn === undefined) {
       throw new Error(`postAction: fn required.`)
     }
 
-    chromeWebView && window.chrome.webview.postMessage(JSON.stringify({fn, args}))
-    reactNativeWebView && window.ReactNativeWebView.postMessage(JSON.stringify({fn, args}))
-    darwinWebView && window.webkit.messageHandlers.callbackHandler.postMessage(JSON.stringify({fn, args}));
+    const callbackId = ++_callbackId
+
+    queueMicrotask(() => {
+      chromeWebView && window.chrome.webview.postMessage(JSON.stringify({fn, callbackId, args}))
+      reactNativeWebView && window.ReactNativeWebView.postMessage(JSON.stringify({fn, callbackId, args}))
+      darwinWebView && window.webkit.messageHandlers.callbackHandler.postMessage(JSON.stringify({fn, callbackId, args}));
+    })
+
+    return new Promise(resolve => {
+      _resolveQueue[callbackId] = resolve
+    })
   }
 
   const sendPostMessage = () => {
@@ -25,6 +48,11 @@ function App() {
     // window.ReactNativeWebView.postMessage('nativeHello()');
     nativeCall('nativeHello')
   }
+
+  const callHelloNative = useCallback(async (...args) => {
+    let r = await nativeCall('nativeHello')
+    setNativeResult(`cb: ${r.callbackId}, ${r.nativeResult}`)
+  })
 
   const [nativeResult, setNativeResult] = useState("")  
 
@@ -40,23 +68,26 @@ function App() {
 
     if (typeof args[0].data === 'string') {
       if (args[0].data.startsWith('webpackHotUpdate')) {
-        // ignore these!
+        removeMessageEventListener()
         return
       }
     } else {
-      // ignore non string
-      log(`non string: ${JSON.stringify(args)}`)
+      // non string data indicates some other message type
       return
     }
 
     try {
-      //let result = JSON.stringify(args[0])
+      // we could now ignore anything that doesn't have a callbackId
       let result = JSON.parse(args[0].data)
-      if (!result.nativeResult)
-        return
 
-      log(`native result: ${result.nativeResult}`)
-      setNativeResult(result.nativeResult)
+      if (result.callbackId > -1) {
+        console.log(`got callback: ${args[0].data}`)
+        try  {
+          _resolveQueue[result.callbackId](result)
+        } catch (e2) {
+          console.log(`callback resolver ${result.callbackId} failed: ${e2.message}\n${e2.stack}`)
+        }
+      }
 
     } catch (e) {
       log(`error parsing result: ${args[0].data.substring ? args[0].data.substring(0, 10) : '<>'}\n${e.message}\n${e.stack}`)
@@ -69,14 +100,10 @@ function App() {
 
     log(`window load: ${reactNativeWebView}, ${chromeWebView}, ${navigator.userAgent}`)
     // window -> message receives a lot of noise, just use document
-    reactNativeWebView && window.addEventListener('message', nativeMessage, true)
-    chromeWebView && window.chrome.webview.addEventListener('message', nativeMessage, true)
-    darwinWebView && window.addEventListener('message', nativeMessage, true)
+    addMessageEventListener(nativeMessage);
 
     return () => {
-      reactNativeWebView && document.removeEventListener('message', nativeMessage, true)
-      chromeWebView && window.chrome.webview.removeEventListener('message', nativeMessage, true)
-      darwinWebView && window.removeEventListener('message', nativeMessage, true)
+      removeMessageEventListener(nativeMessage);
     }
   }, [nativeMessage, log])
   
@@ -87,9 +114,9 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-      <button onClick={sendPostMessage}>Hello Native</button>
+      <button onClick={callHelloNative}>Hello Native</button>
       <h1>{nativeResult}</h1>
-      {chromeWebView && "chromeWebView ☑️<br>"}<br/>
+      {chromeWebView && "chromeWebView ☑️"}<br/>
       {reactNativeWebView && "reactNativeWebView ☑️"}<br/>
       {darwinWebView && "darwinWebView ☑️"}<br/>
       {iosWebView && "iosWebView ☑️"}<br/>
