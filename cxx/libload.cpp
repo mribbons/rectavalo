@@ -12,7 +12,18 @@ extern "C" JNIEXPORT jstring JNICALL
 Java_com_rectavalo_RectavaloModule_helloNative(
         JNIEnv *env,
         jobject /* this */) {
-    return env->NewStringUTF(hello());
+  return env->NewStringUTF(hello());
+}
+
+extern "C" JNIEXPORT jstring JNICALL
+Java_com_rectavalo_RectavaloModule_onMessage(
+        JNIEnv *env,
+        jobject /* this */,
+        jstring messageBody) {
+  const char *nativeString = env->GetStringUTFChars(messageBody, 0);
+  auto result = env->NewStringUTF(onMessage(std::string(nativeString)).c_str());
+  env->ReleaseStringUTFChars(messageBody, nativeString);
+  return result;
 }
 #endif
 

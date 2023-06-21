@@ -59,18 +59,12 @@ function Section({children, title}: SectionProps): JSX.Element {
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-  const [nativeResult, setNativeResult] = useState<String>("")
-  const [firstStart, setFirstStart] = useState<Boolean>(true);
-
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
   return (
-    <>
-      <Text>{nativeResult}</Text>
-      <CustomWebView finalUrl='http://192.168.1.77:3000' />
-    </>
+    <CustomWebView finalUrl='http://192.168.1.77:3000' />
   );
 }
 

@@ -42,20 +42,7 @@ public final class RectavaloModule
     return TAG;
   }
 
-  /**
-   *
-   */
-  // @ReactMethod
-  // public void multiply(final int a, final int b, final Promise promise) {
-  //   long result = multiply(a, b);
-
-  //   final WritableMap response = Arguments.createMap();
-
-  //   response.putString("result", String.valueOf(result));
-
-  //   promise.resolve(response);
-  // }
-
+  public static native String helloNative();
   @ReactMethod void hello(final Promise promise) {
     String result = helloNative();
 
@@ -63,6 +50,13 @@ public final class RectavaloModule
     response.putString("result", String.valueOf(result));
     promise.resolve(response);
   }
-  
-  public static native String helloNative();
+
+  public static native String onMessage(String messageBody);
+  @ReactMethod void nativeCall(String messageBody, final Promise promise) {
+    String result = onMessage(messageBody);
+
+    final WritableMap response = Arguments.createMap();
+    response.putString("result", String.valueOf(result));
+    promise.resolve(response);
+  }
 }

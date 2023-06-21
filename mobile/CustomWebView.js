@@ -24,14 +24,18 @@ export default class CustomWebView extends Component {
     let webViewRef
 
     const nativeCall = async (message) => {
-      const r = (await Rectavalo.nativeCall(message));
-      // console.log(`nativeHello result: ${JSON.stringify(r)}, ${typeof r.result}`)
-      if (typeof r.result === 'string') {
-        console.log(`post message: ${r.result}`)
-        webViewRef.postMessage(r.result)
+      try {
+        const r = (await Rectavalo.nativeCall(message));
+        // console.log(`nativeHello result: ${JSON.stringify(r)}, ${typeof r.result}`)
+        if (typeof r.result === 'string') {
+          console.log(`post message: ${r.result}`)
+          webViewRef.postMessage(r.result)
+        }
+        else
+          console.log(`bad Rectavalo result: ${typeof r.result} ${JSON.stringify(r)}`)
+      } catch (e) {
+        console.log(`nativeCall error: ${e.message}\n${e.stack}`)
       }
-      else
-        console.log(`bad Rectavalo result: ${typeof r.result} ${JSON.stringify(r)}`)
     }
 
     const onMessage = async (e) => {
