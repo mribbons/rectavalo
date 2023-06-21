@@ -81,9 +81,14 @@ function App() {
       let result = JSON.parse(args[0].data)
 
       if (result.callbackId > -1) {
-        console.log(`got callback: ${args[0].data}`)
         try  {
-          _resolveQueue[result.callbackId](result)
+          if (typeof _resolveQueue[result.callbackId] !== 'function') {
+            // happens after hot reload
+            return
+          }
+          let resolve = _resolveQueue[result.callbackId]
+          queueMicrotask(() => resolve(result) )
+          _resolveQueue[result.callbackId] = undefined
         } catch (e2) {
           console.log(`callback resolver ${result.callbackId} failed: ${e2.message}\n${e2.stack}`)
         }
@@ -92,7 +97,6 @@ function App() {
     } catch (e) {
       log(`error parsing result: ${args[0].data.substring ? args[0].data.substring(0, 10) : '<>'}\n${e.message}\n${e.stack}`)
     }
-    log(`native result 1: (${start})`, args[0].data)
   }, [setNativeResult])
 
 
