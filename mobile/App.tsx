@@ -27,6 +27,8 @@ import {
 
 import CustomWebView from './CustomWebView'
 
+import Rectavalo from './Rectavalo'
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -63,8 +65,39 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const [url, setUrl] = useState<String|undefined>('chrome:about')
+
+  useEffect(() => {
+    try {
+      // @ts-ignore
+      import ('config:.env.js').then((config: any) => {
+        // const config = get()
+        console.log(`config: ${JSON.stringify(config)}`)
+          if (config.url) {
+          setUrl(() => {
+            return config.url
+          })
+        }
+      })
+    //   Rectavalo.init().then((i) => {
+    //     Rectavalo.nativeCallWithBuild('io.readFile', '.env.json').then((result: any) => {
+    //     if (result.result) {
+    //       const env = JSON.parse(result.result)
+    //       setUrl(() => {
+    //         return env.url
+    //       })
+    //     } else {
+    //       console.log(`failed to get config: ${result.result}`)
+    //     }
+    //   })
+    // })
+  } catch (e) {
+
+  }
+  }, [])
+
   return (
-    <CustomWebView finalUrl='http://192.168.1.77:3000' />
+    <CustomWebView url={url} />
   );
 }
 

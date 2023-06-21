@@ -17,10 +17,6 @@ export default class CustomWebView extends Component {
   static propTypes = WebView.propTypes;
 
   render() {
-    // const [renderedOnce, setRenderedOnce] = useState(false);
-    // // const webViewRef = useWebViewRef();
-    const uri = 'http://192.168.1.77:3000'
-    // const webViewRef = React.useRef<WebView>(null);
     let webViewRef
 
     const nativeCall = async (message) => {
@@ -79,7 +75,7 @@ export default class CustomWebView extends Component {
         // ref={webViewRef.current}
         ref={WEBVIEW_REF => (webViewRef = WEBVIEW_REF)}
         style={{ height: "100%" }}
-        source={{ uri: uri }}
+        source={{ uri: this.props.url }}
         startInLoadingState={true}
         onMessage={onMessage}
       />

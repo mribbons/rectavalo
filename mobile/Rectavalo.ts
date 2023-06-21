@@ -29,6 +29,9 @@ To fix this issue try these steps:
 }
 
 const Rectavalo = {
+  init: async function(): Promise<String> {
+    return await RectavaloModule.init();
+  },
   /**
    */
   hello: async function(): Promise<String> {
@@ -40,9 +43,14 @@ const Rectavalo = {
    * @param messageBody Receives a json message body for a function to run, eg {fn:'native_call',args:[]}
    * @returns 
    */
-  nativeCall: async function(messageBody: string): Promise<String> {
+  nativeCall: async function(messageBody: string): Promise<string> {
     return await RectavaloModule.nativeCall(messageBody);
   },
+
+  nativeCallWithBuild: async (fn: string, ...args: Array<any>) => {
+    const messageBody = JSON.stringify({fn, args})
+    return Rectavalo.nativeCall(messageBody)
+  }
 };
 
 export default Rectavalo;

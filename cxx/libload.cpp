@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <libload.hpp>
+#include <rectavalo_io.hpp>
 #include <codecvt>
 #include <locale>
 
@@ -113,6 +114,8 @@ std::string onMessage(const Json::Value json) {
   } else if (fn == "console.log") {
     // should supress console response. Logging this response creates an infinite loop.
     response["result"] = console_log(args);
+  } else if (fn == "io.readFile") {
+    response = io_readFile(args);
   } else {
     response["error"] = "Unknown request: " + fn;
   }
