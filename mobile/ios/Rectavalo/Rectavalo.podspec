@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "LibLoad"
+  s.name         = "Rectavalo"
   s.version      = "0.0.1"
   s.summary      = "Lib Load code import"
   s.author       = "Michael Ribbons"

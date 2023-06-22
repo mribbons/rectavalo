@@ -18,7 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\cxx\libload.hpp">
+    <ClCompile Include="..\cxx\rectavalo.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

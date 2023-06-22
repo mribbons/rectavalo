@@ -20,7 +20,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\cxx\libload.hpp">
+    <ClCompile Include="..\cxx\rectavalo.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

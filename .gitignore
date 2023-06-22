@@ -92,9 +92,9 @@ packages
 # cmake generated
 _build/
 
-mobile/ios/LibLoad/**/*.hpp
-mobile/ios/LibLoad/**/*.h
-mobile/ios/LibLoad/**/*.cpp
-!mobile/ios/LibLoad/*Module.h
+mobile/ios/Rectavalo/**/*.hpp
+mobile/ios/Rectavalo/**/*.h
+mobile/ios/Rectavalo/**/*.cpp
+!mobile/ios/Rectavalo/*Module.h
 .env*.js
 boot.html

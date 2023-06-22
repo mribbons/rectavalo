@@ -235,10 +235,10 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\cxx\libload.hpp" />
+    <None Include="..\cxx\rectavalo.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\cxx\libload.cpp" />
+    <ClCompile Include="..\cxx\rectavalo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\cxx\rectavalo_io.cpp" />

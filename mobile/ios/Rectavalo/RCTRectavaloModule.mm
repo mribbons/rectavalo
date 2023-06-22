@@ -1,10 +1,10 @@
-// RCTLibLoadModule.m
-#import "RCTLibLoadModule.h"
-#include <libload.hpp>
+// RCTRectavaloModule.m
+#import "RCTRectavaloModule.h"
+#include <rectavalo.hpp>
 
-@implementation RCTLibLoadModule
+@implementation RCTRectavaloModule
 
-// To export a module named RCTLibLoadModule
+// To export a module named RCTRectavaloModule
 RCT_EXPORT_MODULE(Rectavalo);
 
 

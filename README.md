@@ -4,7 +4,7 @@
  - [x] json parser
  - [ ] websocket server
  - [ ] move json, websocket to separate libs
- - [ ] rename libload, or move json utils
+ - [ ] rename rectavalo, or move json utils
  - [ ] shared lib load
  - [x] No hardcoded dev URL
  - [ ] Support static/bundled html

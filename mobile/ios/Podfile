@@ -48,7 +48,7 @@ target 'mobile' do
     # Pods for testing
   end
 
-  pod 'LibLoad', :path => "./LibLoad"
+  pod 'Rectavalo', :path => "./Rectavalo"
 
   post_install do |installer|
     react_native_post_install(
