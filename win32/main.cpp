@@ -14,6 +14,8 @@
 #include "WebView2EnvironmentOptions.h"
 // </IncludeHeader>
 #include "libload.hpp"
+#include <dwmapi.h>
+
 
 using namespace Microsoft::WRL;
 
@@ -54,7 +56,7 @@ int CALLBACK WinMain(
 	wcex.hInstance = hInstance;
 	wcex.hIcon = LoadIcon(hInstance, IDI_APPLICATION);
 	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wcex.hbrBackground = (HBRUSH)(COLOR_BACKGROUND + 1);
 	wcex.lpszMenuName = NULL;
 	wcex.lpszClassName = szWindowClass;
 	wcex.hIconSm = LoadIcon(wcex.hInstance, IDI_APPLICATION);
@@ -123,6 +125,12 @@ int CALLBACK WinMain(
 
 		return 1;
 	}
+
+#pragma comment (lib, "Dwmapi")
+BOOL USE_DARK_MODE = true;
+BOOL SET_IMMERSIVE_DARK_MODE_SUCCESS = SUCCEEDED(DwmSetWindowAttribute(
+	hWnd, DWMWINDOWATTRIBUTE::DWMWA_USE_IMMERSIVE_DARK_MODE,
+	&USE_DARK_MODE, sizeof(USE_DARK_MODE)));
 
 	// The parameters to ShowWindow explained:
 	// hWnd: the value returned from CreateWindow

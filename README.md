@@ -19,6 +19,7 @@
  - [ ] custom lib imports: loop through entries in folder
  - [ ] copy .env.js to runtime folder
  - [ ] .env-[scheme].js support
+ - [ ] window resize support / start maximised
 
 ### iOS
  - [ ] custom lib imports
@@ -42,3 +43,7 @@
  - [ ] custom lib imports
  - [ ] copy .env.js to runtime folder
  - [ ] .env-[configuration].js support
+
+### Desktop general
+- [ ] Window state (maximized etc)
+- [ ] window size as %
