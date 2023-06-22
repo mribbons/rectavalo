@@ -6,13 +6,13 @@
  - [ ] move json, websocket to separate libs
  - [ ] rename libload, or move json utils
  - [ ] shared lib load
- - [ ] No hardcoded dev URL
+ - [x] No hardcoded dev URL
  - [ ] Support static/bundled html
  - [ ] json*.h - change sprintf to snprintf
  - [ ] memory leaks in native message handler
 
 ### React
- - [ ] clean up 'CustomWebView' class
+ - [x] clean up 'CustomWebView' class
 
 ### Darwin
  - [ ] bundle identifier
