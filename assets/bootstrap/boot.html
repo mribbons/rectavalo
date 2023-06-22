@@ -1,5 +1,9 @@
 <html>
   <head>
+  <script>
+    // slow module load workaround
+    setTimeout(() => {onload()}, 1000)
+  </script>
   <script type="module" src="./.env.js"></script>
   <script>  
   function onload () {
@@ -16,7 +20,7 @@
   // todo - copy .env.js to runtime folder during build
   // windows - add <LocalDebuggerWorkingDirectory>$(SolutionDir)$(Platform)\$(Configuration)\</LocalDebuggerWorkingDirectory>
   // to .vcxproj.user
-  let timeout = setTimeout(() => { window.location = 'http://localhost:3000' }, 200)
+  let timeout = setTimeout(() => { window.location = 'http://localhost:3000' }, 300)
   // onload not firing in webview
   setTimeout(() => {onload()}, 100)
 </script>
