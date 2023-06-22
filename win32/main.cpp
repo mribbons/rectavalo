@@ -4,12 +4,14 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
+#include <filesystem>
 #include <tchar.h>
 #include <wrl.h>
 #include <wil/com.h>
 // <IncludeHeader>
 // include WebView2 header
 #include "WebView2.h"
+#include "WebView2EnvironmentOptions.h"
 // </IncludeHeader>
 #include "libload.hpp"
 
@@ -33,7 +35,7 @@ static wil::com_ptr<ICoreWebView2Controller> webviewController;
 
 // Pointer to WebView window
 static wil::com_ptr<ICoreWebView2> webview;
-static thread_local wchar_t url[80];
+static thread_local wchar_t url[1024];
 
 int CALLBACK WinMain(
 	_In_ HINSTANCE hInstance,
@@ -68,7 +70,11 @@ int CALLBACK WinMain(
 	}
 
 	else {
-		wcscpy_s(url, 80, L"http://localhost:3000");
+		std::wstring fsPath;
+		fsPath.append(L"file:///");
+		fsPath.append(utf8_decode(std::filesystem::current_path().string()));
+		fsPath.append(L"/boot.html");
+		wcscpy_s(url, 1024, fsPath.c_str());
 	}
 
 	LocalFree(szArglist);
@@ -125,12 +131,15 @@ int CALLBACK WinMain(
 		nCmdShow);
 	UpdateWindow(hWnd);
 
-	std::string result(hello());
-
 	// <-- WebView2 sample code starts here -->
 	// Step 3 - Create a single WebView within the parent window
 	// Locate the browser and set up the environment for WebView
-	CreateCoreWebView2EnvironmentWithOptions(nullptr, nullptr, nullptr,
+	std::wstring args;
+	args.append(L"--allow-file-access-from-files");
+	auto options = Microsoft::WRL::Make<CoreWebView2EnvironmentOptions>();
+	options->put_AdditionalBrowserArguments(args.c_str());
+
+	CreateCoreWebView2EnvironmentWithOptions(nullptr, nullptr, options.Get(),
 		Callback<ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler>(
 			[hWnd](HRESULT result, ICoreWebView2Environment* env) -> HRESULT {
 
@@ -149,6 +158,7 @@ int CALLBACK WinMain(
 						settings->put_IsScriptEnabled(TRUE);
 						settings->put_AreDefaultScriptDialogsEnabled(TRUE);
 						settings->put_IsWebMessageEnabled(TRUE);
+						//settings->
 
 						// Resize WebView to fit the bounds of the parent window
 						RECT bounds;

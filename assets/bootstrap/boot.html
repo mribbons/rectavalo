@@ -1,0 +1,27 @@
+<html>
+  <head>
+  <script type="module" src="./.env.js"></script>
+  <script>  
+  function onload () {
+    console.log(`loading`)
+    if (window.config !== undefined) {
+      console.log(`${window.config.url}`)
+      window.location = window.config.url
+    } else {
+      console.log(`config not defined.`)
+    }
+  }
+
+  // todo - pass fullpath of index.html. Should be done with ->Navigate() in release
+  // todo - copy .env.js to runtime folder during build
+  // windows - add <LocalDebuggerWorkingDirectory>$(SolutionDir)$(Platform)\$(Configuration)\</LocalDebuggerWorkingDirectory>
+  // to .vcxproj.user
+  let timeout = setTimeout(() => { window.location = 'http://localhost:3000' }, 200)
+  // onload not firing in webview
+  setTimeout(() => {onload()}, 100)
+</script>
+</head>
+<body>
+  <h1>App starting...</h1>
+</body>
+</html>

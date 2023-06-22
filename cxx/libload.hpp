@@ -3,6 +3,12 @@
 
 #include <json/json.h>
 
+#ifdef _WIN32
+// Convert a wide Unicode string to an UTF8 string
+std::string utf8_encode(const std::wstring& wstr);
+std::wstring utf8_decode(const std::string& str);
+#endif
+
 const char* hello();
 Json::Value parseJson(const std::string& json);
 Json::Value parseJson(const std::wstring& json);

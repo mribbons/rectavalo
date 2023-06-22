@@ -17,6 +17,8 @@
 ### Darwin
  - [ ] bundle identifier
  - [ ] custom lib imports: loop through entries in folder
+ - [ ] copy .env.js to runtime folder
+ - [ ] .env-[scheme].js support
 
 ### iOS
  - [ ] custom lib imports
@@ -26,13 +28,17 @@
  - [ ] custom lib imports
 
 ### Windows
-- [ ] cmakelists.txt
-- [ ] cmakelists.txt: figure out how to use nuget packages
-- [ ] custom lib imports
+ - [ ] cmakelists.txt
+ - [ ] cmakelists.txt: figure out how to use nuget packages
+ - [ ] custom lib imports
+ - [ ] copy .env.js to runtime folder
+ - [ ] .env-[configuration].js support
 
 ### Linux
-- [ ] basic webview app
-- [ ] ubuntu 20 vs 22 support
-- [ ] other distro support
-- [ ] cmakelists.txt
-- [ ] custom lib imports
+ - [ ] basic webview app
+ - [ ] ubuntu 20 vs 22 support
+ - [ ] other distro support
+ - [ ] cmakelists.txt
+ - [ ] custom lib imports
+ - [ ] copy .env.js to runtime folder
+ - [ ] .env-[configuration].js support
