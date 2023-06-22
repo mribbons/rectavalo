@@ -1,5 +1,5 @@
-#ifndef _RECTAVALO_LIBLOAD_H
-#define _RECTAVALO_LIBLOAD_H
+#ifndef _RECTAVALO_H
+#define _RECTAVALO_H
 
 #include <json/json.h>
 
