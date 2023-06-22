@@ -25,13 +25,6 @@ void setup() {
                              defer:NO ];
 
     [myWindow setTitle:@"Web View App"];
-
-    NSString *const requestURL = @"http://192.168.1.77:3000";
-
-    NSURL *url = [[NSURL alloc] initWithString: requestURL];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url
-                                                  cachePolicy: NSURLRequestUseProtocolCachePolicy
-                                              timeoutInterval: 5];
     [myWindow makeKeyAndOrderFront: nil];
     [myWindow orderFrontRegardless];
     [myWindow setup];

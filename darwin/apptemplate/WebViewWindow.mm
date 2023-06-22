@@ -9,17 +9,28 @@
 #import "libload.hpp"
 #include <iostream>
 #include <string>
+#include <filesystem>
 
 @interface WebViewWindow () <WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler>
 @property (nonatomic) WKWebView *webView;
 @end
 
-static NSString *const RequestURL = @"http://192.168.1.77:3000";
+static NSString *RequestURL = @"";
 
 @implementation WebViewWindow
 
 - (void)setup {
     [self setupWebView];
+
+    std::string fsPath;
+    fsPath.append("file:///");
+    fsPath.append(std::filesystem::current_path().string());
+    fsPath.append("/boot.html");
+
+    RequestURL = [NSString 
+      stringWithFormat:@"%s", fsPath.c_str()
+    ];
+
     [self setURL: RequestURL];
 }
 
@@ -28,8 +39,7 @@ static NSString *const RequestURL = @"http://192.168.1.77:3000";
                                       configuration: [self setJS]];
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
-    self.webView.allowsBackForwardNavigationGestures = YES;
-    
+    [self.webView.configuration.preferences setValue:@TRUE forKey:@"allowFileAccessFromFileURLs"];
     [self.webView.configuration.preferences setValue:@YES forKey:@"developerExtrasEnabled"];
     [self setContentView:self.webView];
 }

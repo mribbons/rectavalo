@@ -97,3 +97,4 @@ mobile/ios/LibLoad/**/*.h
 mobile/ios/LibLoad/**/*.cpp
 !mobile/ios/LibLoad/*Module.h
 .env*.js
+boot.html
