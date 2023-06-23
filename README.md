@@ -10,6 +10,8 @@
  - [ ] Support static/bundled html
  - [ ] json*.h - change sprintf to snprintf
  - [ ] memory leaks in native message handler
+ - [ ] Error reporting - toast on mobile
+ - [ ] Error reporting - dialog on desktop
 
 ### React
  - [x] clean up 'CustomWebView' class
@@ -27,6 +29,7 @@
 
 ### Android
  - [ ] custom lib imports
+ - [ ] figure out file listing issue, permission denied on .
 
 ### Windows
  - [ ] cmakelists.txt

@@ -18,6 +18,21 @@ const removeMessageEventListener = (nativeMessage) => {
   darwinWebView && window.removeEventListener('message', nativeMessage, true)
 }
 
+const postMessage = (body) => {
+  chromeWebView && window.chrome.webview.postMessage(JSON.stringify(body))
+  reactNativeWebView && window.ReactNativeWebView.postMessage(JSON.stringify(body))
+  darwinWebView && window.webkit.messageHandlers.callbackHandler.postMessage(JSON.stringify(body))
+}
+
+const nativeCallx1Param = (p) => {
+  p.callbackId = ++_callbackId
+
+  queueMicrotask(() => { postMessage(p) })
+
+  return new Promise(resolve => {
+    _resolveQueue[p.callbackId] = resolve
+  })
+}
 
 const nativeCall = (fn, ...args) => {
   if (fn === undefined) {
@@ -26,11 +41,7 @@ const nativeCall = (fn, ...args) => {
 
   const callbackId = ++_callbackId
 
-  queueMicrotask(() => {
-    chromeWebView && window.chrome.webview.postMessage(JSON.stringify({fn, callbackId, args}))
-    reactNativeWebView && window.ReactNativeWebView.postMessage(JSON.stringify({fn, callbackId, args}))
-    darwinWebView && window.webkit.messageHandlers.callbackHandler.postMessage(JSON.stringify({fn, callbackId, args}))
-  })
+  queueMicrotask(() => { postMessage({fn, callbackId, args}) })
 
   return new Promise(resolve => {
     _resolveQueue[callbackId] = resolve
@@ -74,6 +85,11 @@ const nativeMessage = (...args) => {
   }
 }
 
+const log = (...args) => {
+  console.log(args)
+  nativeCall('console.log', ...args)
+}
+
 export { 
   chromeWebView, 
   reactNativeWebView, 
@@ -82,5 +98,7 @@ export {
   addMessageEventListener,
   removeMessageEventListener,
   nativeCall,
-  nativeMessage
+  nativeCallx1Param,
+  nativeMessage,
+  log
 }
