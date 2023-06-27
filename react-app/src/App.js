@@ -11,7 +11,7 @@ import {
   nativeCall,
   nativeMessage
 }
-from './RectavaloWeb'
+from './rectavalo/RectavaloWeb'
 
 function App() {
 
