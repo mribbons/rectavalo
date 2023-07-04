@@ -1,10 +1,18 @@
+# Rectavalo - Cross Platform App Template
+
+Build your apps in React
+Run your react code in webviews
+
+Mobile is implemented in React Native 
+Windows, MacOS and Linux are implemented in simple C++ applications.
+Note that React Native itself does support Windows and MacOS
+
 ## Todo
 
 ### General
  - [x] json parser
  - [ ] websocket server
  - [ ] move json, websocket to separate libs
- - [ ] rename rectavalo, or move json utils
  - [ ] shared lib load
  - [x] No hardcoded dev URL
  - [ ] Support static/bundled html
@@ -29,7 +37,7 @@
 
 ### Android
  - [ ] custom lib imports
- - [ ] figure out file listing issue, permission denied on .
+ - [x] figure out file listing issue, permission denied on .
 
 ### Windows
  - [ ] cmakelists.txt
@@ -39,13 +47,11 @@
  - [ ] .env-[configuration].js support
 
 ### Linux
- - [ ] basic webview app
- - [ ] ubuntu 20 vs 22 support
- - [ ] other distro support
- - [ ] cmakelists.txt
+ - [x] basic webview app
+ - [x] cmakelists.txt
  - [ ] custom lib imports
- - [ ] copy .env.js to runtime folder
- - [ ] .env-[configuration].js support
+ - [x] copy .env.js to runtime folder
+ - [x] .env-[configuration].js support
 
 ### Desktop general
 - [ ] Window state (maximized etc)
