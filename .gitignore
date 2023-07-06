@@ -22,6 +22,10 @@ DerivedData
 *.xcuserstate
 ios/.xcode.env.local
 
+*.log
+.vscode
+.vs
+
 # Android/IntelliJ
 #
 build/
@@ -98,3 +102,4 @@ mobile/ios/Rectavalo/**/*.cpp
 !mobile/ios/Rectavalo/*Module.h
 .env*.js
 boot.html
+*.env
