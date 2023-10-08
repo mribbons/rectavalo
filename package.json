@@ -1,6 +1,4 @@
 {
-  "type": "module",
-  "devDependencies": {
-    "yargs": "^17.7.2"
-  }
+  "name": "react-core",
+  "type": "module"
 }
